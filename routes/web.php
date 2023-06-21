@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::group(
-    ['namespace' => 'admin', 'prefix' => 'admin'],
+    ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth']],
     function () {
         Route::get('dashboard', 'DashboardController@index');
         Route::get('categories', 'CategoriesController@index');
@@ -29,3 +30,6 @@ Route::group(
         Route::get('categories/delete/{id}', 'CategoriesController@destroy');
     }
 );
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
