@@ -25,13 +25,13 @@
               @endphp
               @foreach ($categories as $category)
               <tr>
-                  <td>{{ $no++ }}</td>
+                  <td>{{ $category->id }}</td>
                   <td>{{ $category->name }}</td>
                   <td>{{ $category->slug }}</td>
-                  <td>{{ $category->parent_id }}</td>
+                  <td>{{ $category->parent_id ? $category->parent->name : '' }}</td>
                   <td>
-                    <a href="categories/{{ $category->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="categories/delete/{{ $category->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin untuk dihapus?')">Delete</a></td>
+                    <a href="{{ url('admin/categories/' . $category->id . '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ url('admin/categories/delete/' . $category->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin untuk dihapus?')">Delete</a>
                   </td>
               </tr>
               @endforeach
@@ -47,7 +47,7 @@
           {{ $categories->links() }}
         </div>
         <div class="card-footer text-right"> 
-          <a href="categories/create" class="btn btn-primary">Add new</a>
+          <a href="{{ url('admin/categories/create') }}" class="btn btn-primary">Add new</a>
         </div>
       </div>
     </div>

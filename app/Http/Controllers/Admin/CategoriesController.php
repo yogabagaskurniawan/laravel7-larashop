@@ -29,7 +29,8 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $categories = Categories::get();
+        $categories = Categories::orderBy('name', 'asc')->get();
+        // $categories = $categories->toArray();
         return view('admin.categories.form', compact('categories'));
     }
 
@@ -43,7 +44,7 @@ class CategoriesController extends Controller
     {
         $params = $request->except('_token');
         $params['slug'] = Str::slug($params['name']);
-        $params['parent_id'] = 0;
+        $params['parent_id'] = (int)$params['parent_id'];
 
         if (Categories::create($params)){
             $request->session()->flash('success', 'Category has been saved');
@@ -71,8 +72,11 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         $category = Categories::findOrFail($id);
-        return view('admin.categories.form', compact('category'));
+        $categories = Categories::orderBy('name', 'asc')->get();
+
+        return view('admin.categories.form', compact('category', 'categories'));
     }
+
 
 
     /**
@@ -82,18 +86,38 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
+    // public function update(CategoryRequest $request, $id)
+    // {
+    //     $params = $request->except('_token');
+    //     $params['slug'] = Str::slug($params['name']);
+
+    //     $category = Categories::findOrFail($id);
+    //     if($category->update($params)){
+    //         $request->session()->flash('success', 'Category has been updated');
+    //     }
+
+    //     return redirect('admin/categories');
+    // }
+
     public function update(CategoryRequest $request, $id)
     {
         $params = $request->except('_token');
         $params['slug'] = Str::slug($params['name']);
 
         $category = Categories::findOrFail($id);
-        if($category->update($params)){
+
+        // Periksa apakah parent_id sama dengan parent_id yang ada di database
+        if ($params['parent_id'] != $category->parent_id && $params['parent_id'] == $id) {
+            return redirect()->back()->withInput()->withErrors('Parent category must be different');
+        }
+
+        if ($category->update($params)) {
             $request->session()->flash('success', 'Category has been updated');
         }
 
         return redirect('admin/categories');
     }
+
 
     /**
      * Remove the specified resource from storage.

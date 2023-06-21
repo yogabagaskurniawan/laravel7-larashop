@@ -29,14 +29,16 @@
             <label for="name">Name</label>
             <input type="text" name="name" class="form-control" placeholder="category name" value="{{ $category->name ?? '' }}">
         </div>
+        <div class="form-group">
+            <label for="parent_id">Parent</label>
+            {!! General::selectMultiLevel('parent_id', $categories, ['class' => 'form-control', 'selected' => (!empty(old('parent_id')) ? old('parent_id') : (!empty($category['parent_id']) ? $category['parent_id'] : '')), 'placeholder' => '-- Choose Category --']) !!}
+        </div>
         <div class="form-footer pt-5 border-top">
             <button type="submit" class="btn btn-primary btn-default">Save</button>
+            <a href="{{ url('admin/categories') }}" class="btn btn-secondary">back</a>
         </div>
         </form>
       </div>
-    
-        
-    
     </div>
   </div>
 </div>
