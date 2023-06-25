@@ -45,4 +45,10 @@ class Product extends Model
             2 => 'inactive',
         ];
     }
+
+    // relasi ke tabel product_images
+    public function productImages()
+    {
+        return $this->hasMany('App\Models\productImage');
+    }
 }
