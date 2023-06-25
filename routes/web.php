@@ -22,12 +22,15 @@ Route::group(
     ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth']],
     function () {
         Route::get('dashboard', 'DashboardController@index');
+
         Route::get('categories', 'CategoriesController@index');
         Route::get('categories/create', 'CategoriesController@create');
         Route::post('categories/store', 'CategoriesController@store')->name('admin.categories.store');
         Route::get('categories/{id}/edit', 'CategoriesController@edit');
         Route::put('categories/update/{id}', 'CategoriesController@update')->name('admin.categories.update');
         Route::get('categories/delete/{id}', 'CategoriesController@destroy');
+
+        Route::resource('products', 'ProductController');
     }
 );
 Auth::routes();
