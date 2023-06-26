@@ -17,6 +17,12 @@ class CreateAttributesTable extends Migration
             $table->bigIncrements('id');
             $table->string('code');
             $table->string('name');
+            $table->string('type');
+            $table->string('validation')->nullable();
+            $table->boolean('is_required')->default(false);
+            $table->boolean('is_unique')->default(false);
+            $table->boolean('is_filterable')->default(false);
+            $table->boolean('is_configurable')->default(false);
             $table->timestamps();
         });
     }
