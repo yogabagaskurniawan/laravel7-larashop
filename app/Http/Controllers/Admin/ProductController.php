@@ -14,7 +14,11 @@ use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Session\Session;
 use App\Http\Requests\ProductImageRequest;
-
+use App\Models\Attribute;
+use App\Models\AttributeOption;
+use App\Models\ProductAttributeValue;
+use App\Models\ProductInventory;
+use PhpParser\Node\AttributeGroup;
 
 class ProductController extends Controller
 {
@@ -24,6 +28,7 @@ class ProductController extends Controller
     {
         $this->data = [];
         $this->data['statuses'] = Product::statuses();
+        $this->data['types'] = Product::types();
     }
 
     /**
@@ -45,13 +50,96 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Categories::orderBy('name', 'asc')->get();
-        // $categories = $categories->toArray();
+        $configurableAttributes = $this->getConfigurableAttributes();
         $product = null;
         $productID = 0;
         $categoryIDs = [];
-        return view('admin.products.form', $this->data ,compact('categories','product', 'categoryIDs', 'productID'));
+        return view('admin.products.form', $this->data ,compact('categories','product', 'categoryIDs', 'productID', 'configurableAttributes'));
     }
 
+    // menangkap input dari tambah prodact dibagian configurable yang attribute
+    private function getConfigurableAttributes()
+    {
+        return Attribute::where('is_configurable', true)->get();
+    }
+
+    private function generateAttributeCombinations($arrays)
+    {
+        $result = [[]];
+        foreach ($arrays as $property => $property_values) {
+            $tmp = [];
+            foreach ($result as $result_item) {
+                foreach ($property_values as $property_value) {
+                    $tmp[] = array_merge($result_item, array($property=>$property_value));
+                }
+            }
+            $result = $tmp;
+        }
+        return $result;
+    }
+
+    private function convertVariantAsName($variant)
+    {
+        $variantName = '';
+        foreach (array_keys($variant) as $key => $code) {
+            $attributeOptionID = $variant[$code];
+            $attributeOption = AttributeOption::find($attributeOptionID);
+            if($attributeOption){
+                $variantName .='-'.$attributeOption->name;
+            }
+        }
+        return $variantName;
+    }
+
+    public function generateProductVariants($product, $params)
+    {
+        $configurableAttributes = $this->getConfigurableAttributes();
+        $variantAttributes = [];
+        foreach ($configurableAttributes as $attribute) {
+            $variantAttributes[$attribute->code] = $params[$attribute->code];
+        }
+
+        // dd($variantAttributes);
+        $variants = $this->generateAttributeCombinations($variantAttributes);
+        // dd($variants);
+
+        if ($variants) {
+            foreach ($variants as $variant) {
+                $variantParams = [
+                    'parent_id' => $product->id,
+                    'user_id' => Auth::user()->id,
+                    'sku' => $product->sku . '-' . implode('-', array_values($variant)),
+                    'type' => 'simple',
+                    'name' => $product->name . $this->convertVariantAsName($variant),
+                ];
+                // dd($variantParams);
+
+                $variantParams['slug'] = Str::slug($variantParams['name']);
+
+                $newProductVariant = Product::create($variantParams);
+
+                $categoryIds = !empty($params['category_ids']) ? $params['category_ids'] : [];
+                $newProductVariant->categories()->sync($categoryIds);
+
+                $this->saveProductAttributeValues($newProductVariant, $variant);
+            }
+        }
+    }
+
+    private function saveProductAttributeValues($product, $variant)
+    {
+        foreach (array_values($variant) as $attributeOptionID) {
+            $attributeOption = AttributeOption::find($attributeOptionID);
+            $attributeValueParams = [
+                'product_id' => $product->id,
+                'attribute_id' => $attributeOption->attribute_id,
+                'text_value' => $attributeOption->name,
+            ];
+
+            ProductAttributeValue::create($attributeValueParams);
+        }
+    }
+    // end
     /**
      * Store a newly created resource in storage.
      *
@@ -64,21 +152,27 @@ class ProductController extends Controller
         $params['slug'] = Str::slug($params['name']);
         $params['user_id'] = Auth::user()->id;
 
-        $saved = false;
-        $saved = DB::transaction(function () use ($params) {
+        $product = DB::transaction(function () use ($params) {
+            $categoryIds = !empty($params['category_ids']) ? $params['category_ids'] : [];
             $product = Product::create($params);
-            $product->categories()->sync($params['category_ids']);
+            // $product->categories()->sync($params['category_ids']);
+            $product->categories()->sync($categoryIds);
 
-            return true;
+
+            if($params['type'] == 'configurable'){
+                $this->generateProductVariants($product, $params);
+            }
+
+            return $product;
         });
 
-        if($saved){
+        if($product){
             $request->session()->flash('success', 'Product has been saved');
         } else {
             $request->session()->flash('error', 'Product could not be saved');
         }
 
-        return redirect('admin/products');
+        return redirect('admin/products/'.$product->id.'/edit');
     }
 
     /**
@@ -112,6 +206,7 @@ class ProductController extends Controller
         $this->data['productID'] = $product->id;
         $this->data['categoryIDs'] = $product->categories->pluck('id')->toArray();
 
+        // dd($this->data);
         return view('admin.products.form', $this->data);
     }
 
@@ -122,28 +217,54 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(ProductRequest $request, $id)
     {
         $params = $request->except('_token');
         $params['slug'] = Str::slug($params['name']);
+        // $params['status'] = isset($params['status']) ? intval($params['status']) : 0;
 
         $product = Product::findOrFail($id);
 
         $saved = false;
-        $saved = DB::transaction(function() use ($product, $params){
+        $saved = DB::transaction(function() use ($product, $params) {
+            $categoryIds = !empty($params['category_ids']) ? $params['category_ids'] : [];
             $product->update($params);
-            $product->categories()->sync($params['category_ids']);
+            $product->categories()->sync($categoryIds);
+
+            if ($product->type == 'configurable') {
+                $this->updateProductVariants($params);
+            } else {
+                ProductInventory::updateOrCreate(['product_id' => $product->id], ['qty' => $params['qty']]);
+            }
 
             return true;
         });
 
-        if($saved){
+        if ($saved) {
+            // Session::flash('success', 'Product has been saved');
             $request->session()->flash('success', 'Product has been saved');
         } else {
+            // Session::flash('error', 'Product could not be saved');
             $request->session()->flash('error', 'Product could not be saved');
         }
 
         return redirect('admin/products');
+    }
+
+    public function updateProductVariants($params)
+    {
+        if ($params['variants']) {
+            foreach ($params['variants'] as $productParams) {
+                $product = Product::find($productParams['id']);
+                $product->update($productParams);
+
+                $product->status = $params['status'];
+                $product->save();
+
+                ProductInventory::updateOrCreate(['product_id' => $product->id], ['qty' => $productParams['qty']]);
+            }
+        }
     }
 
     /**
@@ -156,10 +277,16 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        if($product->delete()){
-            $request->session()->flash('success', 'Product has been deleted');
+        // Cek apakah produk memiliki produk anak terkait
+        if ($product->variants()->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Cannot delete product with associated child products.']);
         }
-        return redirect('admin/products');
+
+        if ($product->delete()) {
+            return redirect()->back()->with('success', 'Product has been deleted');
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Failed to delete product.']);
+        }
     }
 
     // ============ mengatasi bagian upload gambar ============

@@ -158,6 +158,28 @@
     <script src="{{ asset('admin/assets/js/sleek.js') }} "></script>
     <link href="{{ asset('admin/assets/options/optionswitch.css') }} " rel="stylesheet">
     <script src="{{ asset('admin/assets/options/optionswitcher.js') }} "></script>
+    <script>
+      $(".delete").on("submit", function () {
+        return confirm("Do you want to remove this?");
+      });
+  
+      function showHideConfigurableAttributes() {
+        var productType = $(".product-type").val();
+          
+        if (productType == 'configurable') {
+          $(".configurable-attributes").show();
+        } else {
+          $(".configurable-attributes").hide();
+        }
+      }
+  
+      $(function(){
+        showHideConfigurableAttributes();
+        $(".product-type").change(function() {
+          showHideConfigurableAttributes();
+        });
+      });
+    </script>
 </body>
 </html>
 

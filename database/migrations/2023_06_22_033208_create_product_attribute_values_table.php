@@ -26,9 +26,9 @@ class CreateProductAttributeValuesTable extends Migration
             $table->text('json_value')->nullable();
             $table->timestamps();
 
-            // isi tabel ini akan otomatis terhapus jika tabel products dan attributes dihapus
+            // isi tabel ini akan otomatis terhapus jika tabel products dihapus
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
+            $table->foreign('attribute_id')->references('id')->on('attributes');
         });
     }
 

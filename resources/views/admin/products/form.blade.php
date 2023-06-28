@@ -1,167 +1,140 @@
-{{-- @extends('admin.layout.main')
-
-@section('content')
-    
-@php
-    $formTitle = !empty($category) ? 'Update' : 'New'    
-@endphp
-
-<div class="content">
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card card-default">
-                <div class="card-header card-header-border-bottom">
-                        <h2>{{ $formTitle }} Product</h2>
-                </div>
-                <div class="card-body">
-                    @include('admin.partials.flash', ['$errors' => $errors])
-                    @if (!empty($product))
-                        {!! Form::model($product, ['url' => ['admin/products', $product->id], 'method' => 'PUT']) !!}
-                        {!! Form::hidden('id') !!}
-                    @else
-                        {!! Form::open(['url' => 'admin/products']) !!}
-                    @endif
-                        <div class="form-group">
-                            {!! Form::label('sku', 'SKU') !!}
-                            {!! Form::text('sku', null, ['class' => 'form-control', 'placeholder' => 'sku']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('name', 'Name') !!}
-                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'name']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('price', 'Price') !!}
-                            {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => 'price']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('category_ids', 'Category') !!}
-                            {!! General::selectMultiLevel('category_ids[]', $categories, ['class' => 'form-control', 'multiple' => true, 'selected' => !empty(old('category_ids')) ? old('category_ids') : $categoryIDs, 'placeholder' => '-- Choose Category --']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('short_description', 'Short Description') !!}
-                            {!! Form::textarea('short_description', null, ['class' => 'form-control', 'placeholder' => 'short description']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('description', 'Description') !!}
-                            {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'description']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('weight', 'Weight') !!}
-                            {!! Form::text('weight', null, ['class' => 'form-control', 'placeholder' => 'weight']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('length', 'Length') !!}
-                            {!! Form::text('length', null, ['class' => 'form-control', 'placeholder' => 'length']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('width', 'Width') !!}
-                            {!! Form::text('width', null, ['class' => 'form-control', 'placeholder' => 'width']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('height', 'Height') !!}
-                            {!! Form::text('height', null, ['class' => 'form-control', 'placeholder' => 'height']) !!}
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('status', 'Status') !!}
-                            {!! Form::select('status', $statuses , null, ['class' => 'form-control', 'placeholder' => '-- Set Status --']) !!}
-                        </div>
-                        <div class="form-footer pt-5 border-top">
-                            <button type="submit" class="btn btn-primary btn-default">Save</button>
-                            <a href="{{ url('admin/products') }}" class="btn btn-secondary btn-default">Back</a>
-                        </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>  
-        </div>
-    </div>
-</div>
-@endsection --}}
-
 @extends('admin.layout.main')
 
 @section('content')
     
 @php
-    $formTitle = !empty($product) ? 'Update' : 'New';   
+    $formTitle = !empty($product) ? 'Update' : 'New'    
 @endphp
 
-<div class="content">
-    <div class="row">
-        <div class="col-lg-4">
-            @include('admin.products.layouts_menus.product_menus')
-        </div>
-        <div class="col-lg-8">
-            <div class="card card-default">
-                <div class="card-header card-header-border-bottom">
+<div class="row">
+    <div class="col-lg-3">
+        @include('admin.products.layouts_menus.product_menus')
+    </div>
+    <div class="col-lg-9">
+        <div class="card card-default">
+            <div class="card-header card-header-border-bottom">
                     <h2>{{ $formTitle }} Product</h2>
-                </div>
-                <div class="card-body">
-                    @include('admin.partials.flash', ['$errors' => $errors])
-                    @if (!empty($product))
-                        <form action="{{ url('admin/products/'.$product->id) }}" method="POST">
-                            @method('PUT')
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $product->id }}">
-                    @else
-                        <form action="{{ url('admin/products') }}" method="POST">
-                            @csrf
-                    @endif
-                        <div class="form-group">
-                            <label for="sku">SKU</label>
-                            <input type="text" name="sku" class="form-control" placeholder="sku" value="{{ $product->sku ?? '' }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" name="name" class="form-control" placeholder="name" value="{{ $product->name ?? '' }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price</label>
-                            <input type="text" name="price" class="form-control" placeholder="price" value="{{ $product->price ?? '' }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="category_ids">Category</label>
-                            {!! General::selectMultiLevel('category_ids[]', $categories, ['class' => 'form-control', 'multiple' => true, 'selected' => !empty(old('category_ids')) ? old('category_ids') : $categoryIDs, 'placeholder' => '-- Choose Category --']) !!}
-                        </div>
+            </div>
+            <div class="card-body">
+                @include('admin.partials.flash', ['$errors' => $errors])
+                @if (!empty($product))
+                    <form method="POST" action="{{ url('admin/products/' . $product->id) }}">
+                        @method('PUT')
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+                        <!-- tambahkan input hidden untuk menyimpan ID -->
+                        <input type="hidden" name="type" value="{{ $product->type }}">
+                @else
+                    <form method="POST" action="{{ url('admin/products') }}">
+                @endif
+                    @csrf
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select name="type" class="form-control product-type">
+                            <option value="">-- Choose Product Type --</option>
+                            @foreach ($types as $type => $label)
+                                <option value="{{ $type }}" {{ !empty($product) && $product->type == $type ? 'selected' : '' }}>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>                        
+                    <div class="form-group">
+                        <label for="sku">SKU</label>
+                        <input type="text" name="sku" class="form-control" placeholder="sku" value="{{ !empty($product) ? $product->sku : '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="name" value="{{ !empty($product) ? $product->name : '' }}">
+                    </div>
+                    {{-- <div class="form-group">
+                        <label for="category_ids">Category</label>
+                        <select name="category_ids[]" class="form-control" multiple>
+                            <option value="">-- Choose Category --</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category['id'] }}" {{ in_array($category['id'], !empty(old('category_ids')) ? old('category_ids') : $categoryIDs) ? 'selected' : '' }}>
+                                    {{ $category['name'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div> --}}
+                    <div class="form-group">
+                        <label for="category_ids">Category</label>
+                        <select name="category_ids[]" class="form-control" multiple>
+                            <option value="">-- Choose Category --</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category['id'] }}" {{ in_array($category['id'], (is_array(old('category_ids')) ? old('category_ids') : $categoryIDs)) ? 'selected' : '' }}>
+                                    {{ $category['name'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>                    
+                    {{-- <div class="configurable-attributes">
+                        @if (!empty($configurableAttributes) && empty($product))
+                            <p class="text-primary mt-4">Configurable Attributes</p>
+                            <hr/>
+                            @foreach ($configurableAttributes as $attribute)
+                                <div class="form-group">
+                                    <label for="{{ $attribute->code }}">{{ $attribute->name }}</label>
+                                    <select name="{{ $attribute->code }}[]" class="form-control" multiple>
+                                        @foreach ($attribute->attributeOptions as $option)
+                                            <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div> --}}
+                    <div class="configurable-attributes">
+                        @if (!empty($configurableAttributes) && empty($product))
+                            <p class="text-primary mt-4">Configurable Attributes</p>
+                            <hr/>
+                            @foreach ($configurableAttributes as $attribute)
+                                <div class="form-group">
+                                    <label for="{{ $attribute->code }}">{{ $attribute->name }}</label>
+                                    @foreach ($attribute->attributeOptions as $option)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="{{ $attribute->code }}[]" value="{{ $option->id }}" id="{{ $attribute->code }}_{{ $option->id }}">
+                                            <label class="form-check-label" for="{{ $attribute->code }}_{{ $option->id }}">
+                                                {{ $option->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>                        
+            
+                    @if ($product)
+                        @if ($product->type == 'configurable')
+                            @include('admin.products.configurable')
+                        @else
+                            @include('admin.products.simple')                            
+                        @endif
+            
                         <div class="form-group">
                             <label for="short_description">Short Description</label>
-                            <textarea name="short_description" class="form-control" placeholder="short description">{{ $product->short_description ?? '' }}</textarea>
+                            <textarea name="short_description" class="form-control" placeholder="short description">{{ !empty($product) ? $product->short_description : '' }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea name="description" class="form-control" placeholder="description">{{ $product->description ?? '' }}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="weight">Weight</label>
-                            <input type="text" name="weight" class="form-control" placeholder="weight" value="{{ $product->weight ?? '' }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="length">Length</label>
-                            <input type="text" name="length" class="form-control" placeholder="length" value="{{ $product->length ?? '' }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="width">Width</label>
-                            <input type="text" name="width" class="form-control" placeholder="width" value="{{ $product->width ?? '' }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="height">Height</label>
-                            <input type="text" name="height" class="form-control" placeholder="height" value="{{ $product->height ?? '' }}">
+                            <textarea name="description" class="form-control" placeholder="description">{{ !empty($product) ? $product->description : '' }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select name="status" class="form-control" placeholder="-- Set Status --">
-                                @foreach($statuses as $key => $status)
-                                    <option value="{{ $key }}" {{ (isset($product->status) && $product->status == $key) ? 'selected' : '' }}>{{ $status }}</option>
+                                <option value="">-- Set Status --</option>
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status }}" {{ !empty($product) && $product->status == $status ? 'selected' : '' }}>{{ $status }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-footer pt-5 border-top">
-                            <button type="submit" class="btn btn-primary btn-default">Save</button>
-                            <a href="{{ url('admin/products') }}" class="btn btn-secondary btn-default">Back</a>
-                        </div>
-                    </form>
-                </div>
-            </div>  
-        </div>
+                    @endif
+                    <div class="form-footer pt-5 border-top">
+                        <button type="submit" class="btn btn-primary btn-default">Save</button>
+                        <a href="{{ url('admin/products') }}" class="btn btn-secondary btn-default">Back</a>
+                    </div>
+                </form>
+            </div>
+            
+        </div>  
     </div>
 </div>
 @endsection

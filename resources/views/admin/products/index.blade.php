@@ -16,7 +16,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th style="width:15%">Action</th>
             </thead>
             <tbody>
                 @foreach ($products as $product)
@@ -24,15 +24,11 @@
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->sku }}</td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->price }}</td>
+                        {{-- <td>{{ $product->price }}</td> --}}
+                        <td>{{ number_format($product->price) }}</td>
                         <td>{{ $product->status }}</td>
                         <td>
                             <a href="{{ url('admin/products/'. $product->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
-                            
-                            {{-- {!! Form::open(['url' => 'admin/products/'. $product->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
-                            {!! Form::hidden('_method', 'DELETE') !!}
-                            {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
-                            {!! Form::close() !!} --}}
                             <a href="{{ url('admin/products/' . $product->id) }}" class="delete" style="display:inline-block"
                               onclick="event.preventDefault(); if (confirm('Are you sure you want to remove this item?')) { document.getElementById('delete-form-{{ $product->id }}').submit(); }">
                               <button type="button" class="btn btn-danger btn-sm">Remove</button>

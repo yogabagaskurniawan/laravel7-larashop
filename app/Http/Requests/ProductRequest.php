@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProductRequest extends FormRequest
 {
@@ -23,20 +24,40 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == 'PUT') {
-            $sku = 'required|unique:products,sku,' . $this->get('id');
-            $name = 'required|unique:products,name,' . $this->get('id');
+        $qty = 'numeric';
+        $price = 'numeric';
+        // $status = '';
+        $status = 'nullable'; 
+        $weight = 'numeric';
+
+        if ($this->method() == 'PUT')
+        {
+            $type = '';
+            $sku = 'required|unique:products,sku,'. $this->get('id');
+            $name = 'required|unique:products,name,'. $this->get('id');
+            $status = 'required';
+            
+            if ($this->get('type') == 'simple') {
+                $qty .= '|required';
+                $price .= '|required';
+                $weight .= '|required';
+            }
         } else {
+            $type = 'required';
             $sku = 'required|unique:products,sku';
-            $name = 'required|unique:products,name,NULL,id';
+            $name = 'required|unique:products,name';
         }
-        
+
         return [
+            'type' => $type,
             'sku' => $sku,
             'name' => $name,
-            'weight' => 'required|numeric',
-            'price' => 'required|numeric',
-            'status' => 'required',
+            'price' => $price,
+            'qty' => $qty,
+            'status' => $status,
+            'weight' => $weight,
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'integer',  
         ];
     }
 }
