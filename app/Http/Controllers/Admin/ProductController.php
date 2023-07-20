@@ -3,25 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Product;
-use App\Models\Attribute;
 use App\Models\Categories;
 use Illuminate\Support\Str;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
-use App\Models\AttributeOption;
-use App\Models\ProductInventory;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\AttributeGroup;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductRequest;
-use App\Models\ProductAttributeValue;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Session\Session;
 use App\Http\Requests\ProductImageRequest;
-use App\Models\User;
-use Spatie\Permission\Models\Permission;
+use App\Models\Attribute;
+use App\Models\AttributeOption;
+use App\Models\ProductAttributeValue;
+use App\Models\ProductInventory;
+use PhpParser\Node\AttributeGroup;
 
 class ProductController extends Controller
 {
@@ -41,22 +38,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // === Give premission to Role (tabel role_has_permission)
-        // $role = Role::findOrFail(1); //admin
-        // $permission1 = Permission::findOrFail(1); //create
-        // $permission2 = Permission::findOrFail(2); //edit
-        // $permission3 = Permission::findOrFail(3); //delete
-        // $role->givePermissionTo([$permission1, $permission2, $permission3]);
-
-        // $role = Role::findOrFail(2); //operator
-        // $permission = Permission::findOrFail(2); //edit
-        // $role->givePermissionTo($permission);
-
-        // === assign role to user (tabel model_has_roles)
-        $user = User::findOrFail(2); //operator
-        $role = Role::findOrFail(2); //operator
-        $user->assignRole($role);
-
         $products = Product::orderBy('name', 'asc')->paginate(10);
         return view('admin.products.index', compact('products'));
     }
