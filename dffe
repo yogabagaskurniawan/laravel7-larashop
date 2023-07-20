@@ -1,0 +1,72 @@
+[33mcommit 8b3c17a31391e793ba73fc669cb450ab398f866e[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Sun Jul 9 21:17:07 2023 +0700
+
+     install spatie permission
+
+[33mcommit e6018177359cc028607d62606811f011835a625a[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Fri Jun 30 20:12:11 2023 +0700
+
+    Menambahkan tabel seeder
+
+[33mcommit 8be166c6478ef5158b6aeb92e0ce2f4c0b7803e6[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Wed Jun 28 20:08:18 2023 +0700
+
+    Manajemen Produk | Simple dan Configurable Product - - Konsep simple dan configurable product - Membuat varian produk berdasar attribute tertentu
+    - Inventory / stok produk
+
+[33mcommit 1c9b8dcba6772910cf452f099d03afdf3fb0e9a1[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Mon Jun 26 20:33:06 2023 +0700
+
+    Manajemen Produk  bagian Atribute Produk - Manajemen Atribute Produk - Manajemen Atribute Options - Simple dan Configurable Product
+
+[33mcommit 3af591be5066fe556bae765bb0e41e9964df71a5[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Sun Jun 25 17:12:15 2023 +0700
+
+    Manajemen Produk Upload Foto Produk - Relasi Model Product dan ProductImage - Routing untuk Upload Foto Produk dan List Foto - Validasi Upload Foto/Image - Hapus Foto Produk
+
+[33mcommit d6f6f33ac528b427b1e48666aebd5681ea2c687a[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Sun Jun 25 11:57:16 2023 +0700
+
+    Manajemen Produk - - Modifikasi Tabel dengan Migration File - Membuat Model dan Relasinya - Validasi Form - Fitur List, Tambah, Edit dan Hapus Produk
+
+[33mcommit 5b156ea2b6fd5dfdc6c7f4f11f6c456c82ce45c8[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Thu Jun 22 11:14:38 2023 +0700
+
+     Manajemen Produk - Pembuatan Table Database
+
+[33mcommit 77f6b88068e6821c1fe6b9f9f8b52a2dd9a2b695[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Wed Jun 21 16:02:22 2023 +0700
+
+    Membuat login user
+
+[33mcommit e7764241d0f184ca94eddfadf6a42d1ff5db0079[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Wed Jun 21 14:34:28 2023 +0700
+
+     Membuat Manajemen Kategori - Multi Level Kategori
+
+[33mcommit 7d18d2da2e277e07719168e5c6665c95f8178e40[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Tue Jun 20 23:29:13 2023 +0700
+
+    membuat crud untuk route di category
+
+[33mcommit 1830f65b12018d69be7a739586e011a888b2d1b8[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Mon Jun 19 22:11:20 2023 +0700
+
+    memodifikasi routes dan memasang templete admin dashboard
+
+[33mcommit 15cefdba853da531cf6486e84998ae03583a661e[m
+Author: yogabagaskurniawan <yogabag4s@gmail.com>
+Date:   Sun Jun 18 16:47:36 2023 +0700
+
+    first commit

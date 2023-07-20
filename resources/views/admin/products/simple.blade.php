@@ -14,8 +14,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="qty">Qty Inventory</label>
-            {{-- <input type="text" name="qty" class="form-control" placeholder="qty" value="{{ !empty($product) ? $product->productInventory->qty : '' }}"> --}}
-            <input type="text" name="qty" class="form-control" placeholder="qty" value="{{ !empty($product->productInventory) ? $product->productInventory->qty : '' }}">
+            <input type="text" name="qty" class="form-control" placeholder="qty" value="{{ !empty($product) ? $product->productInventory->qty : '' }}">
         </div>
     </div>
 </div>
