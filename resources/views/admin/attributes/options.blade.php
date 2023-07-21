@@ -24,12 +24,14 @@
                                         <td>{{ $option->id }}</td>
                                         <td>{{ $option->name }}</td>
                                         <td>
-                                            <a href="{{ url('admin/attributes/options/'. $option->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
-                                            <form action="{{ url('admin/attributes/options/'. $option->id) }}" method="POST" class="delete" style="display:inline-block">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus opsi ini?')">remove</button>
-                                            </form>
+                                            @if (auth()->user()->status==1)
+                                                <a href="{{ url('admin/attributes/options/'. $option->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
+                                                <form action="{{ url('admin/attributes/options/'. $option->id) }}" method="POST" class="delete" style="display:inline-block">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm">remove</button>
+                                                </form>
+                                            @endif
                                         </td>                                        
                                     </tr>
                                 @empty

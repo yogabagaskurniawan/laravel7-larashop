@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// admin access
 Route::group(
     ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth','isAdmin:1']],
     function () {
@@ -25,21 +26,34 @@ Route::group(
         Route::get('products/create', 'ProductController@create');
         Route::post('products', 'ProductController@store');
         Route::delete('products/{id}', 'ProductController@destroy');
-    }
-);    
-
-Route::group(
-    ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth']],
-    function () {
-        Route::get('dashboard', 'DashboardController@index');
-
+        
         //  categories
-        Route::get('categories', 'CategoriesController@index');
         Route::get('categories/create', 'CategoriesController@create');
         Route::post('categories/store', 'CategoriesController@store')->name('admin.categories.store');
         Route::get('categories/{id}/edit', 'CategoriesController@edit');
         Route::put('categories/update/{id}', 'CategoriesController@update')->name('admin.categories.update');
         Route::get('categories/delete/{id}', 'CategoriesController@destroy');
+
+        // attribute
+        Route::get('attributes/{id}/edit', 'AttributeController@edit');
+        Route::put('attributes/{id}', 'AttributeController@update');
+        Route::delete('attributes/{id}', 'AttributeController@destroy');
+
+        // attribute options
+        Route::delete('attributes/options/{optionID}', 'AttributeController@remove_option');
+        Route::get('attributes/options/{optionID}/edit', 'AttributeController@edit_option');
+        Route::put('attributes/options/{optionID}', 'AttributeController@update_option');
+    }
+);    
+
+// operator access
+Route::group(
+    ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth']],
+    function () {
+        Route::get('dashboard', 'DashboardController@index');
+        
+        // categories
+        Route::get('categories', 'CategoriesController@index');
 
         // product
         Route::get('products', 'ProductController@index');
@@ -53,15 +67,13 @@ Route::group(
         Route::delete('products/images/{imageID}','ProductController@remove_image');
 
         // attribute
-        Route::resource('attributes', 'AttributeController');
+        Route::get('attributes', 'AttributeController@index');
+        Route::get('attributes/create', 'AttributeController@create');
+        Route::post('attributes', 'AttributeController@store');
 
         // attribute options
         Route::get('attributes/{attributeID}/options', 'AttributeController@options');
-        // Route::get('attributes/{attributeID}/add-option', 'AttributeController@add_option');
         Route::post('attributes/options/{attributeID}', 'AttributeController@store_option');
-        Route::delete('attributes/options/{optionID}', 'AttributeController@remove_option');
-        Route::get('attributes/options/{optionID}/edit', 'AttributeController@edit_option');
-        Route::put('attributes/options/{optionID}', 'AttributeController@update_option');
     }
 );
 Auth::routes();

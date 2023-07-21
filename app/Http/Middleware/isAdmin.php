@@ -20,6 +20,6 @@ class isAdmin
             return $next($request);
         }
         // jika tidak ada 
-        return redirect('/products');
+        return redirect('/admin/products');
     }
 }

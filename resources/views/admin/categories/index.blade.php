@@ -30,8 +30,10 @@
                   <td>{{ $category->slug }}</td>
                   <td>{{ $category->parent_id ? $category->parent->name : '' }}</td>
                   <td>
-                    <a href="{{ url('admin/categories/' . $category->id . '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="{{ url('admin/categories/delete/' . $category->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin untuk dihapus?')">Delete</a>
+                    @if (auth()->user()->status==1)
+                      <a href="{{ url('admin/categories/' . $category->id . '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                      <a href="{{ url('admin/categories/delete/' . $category->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin untuk dihapus?')">Delete</a>
+                    @endif
                   </td>
               </tr>
               @endforeach
@@ -47,7 +49,9 @@
           {{ $categories->links() }}
         </div>
         <div class="card-footer text-right"> 
-          <a href="{{ url('admin/categories/create') }}" class="btn btn-primary">Add new</a>
+          @if (auth()->user()->status==1)
+            <a href="{{ url('admin/categories/create') }}" class="btn btn-primary">Add new</a>
+          @endif
         </div>
       </div>
     </div>
