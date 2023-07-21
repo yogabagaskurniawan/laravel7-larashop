@@ -19,10 +19,21 @@ Route::get('/', function () {
 });
 
 Route::group(
+    ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth','isAdmin:1']],
+    function () {
+        // add product admin
+        Route::get('products/create', 'ProductController@create');
+        Route::post('products', 'ProductController@store');
+        Route::delete('products/{id}', 'ProductController@destroy');
+    }
+);    
+
+Route::group(
     ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth']],
     function () {
         Route::get('dashboard', 'DashboardController@index');
 
+        //  categories
         Route::get('categories', 'CategoriesController@index');
         Route::get('categories/create', 'CategoriesController@create');
         Route::post('categories/store', 'CategoriesController@store')->name('admin.categories.store');
@@ -30,15 +41,21 @@ Route::group(
         Route::put('categories/update/{id}', 'CategoriesController@update')->name('admin.categories.update');
         Route::get('categories/delete/{id}', 'CategoriesController@destroy');
 
-        Route::resource('products', 'ProductController');
+        // product
+        Route::get('products', 'ProductController@index');
+        Route::get('products/{id}/edit', 'ProductController@edit');
+        Route::put('products/{id}', 'ProductController@update');
 
+        // product image
         Route::get('products/{productID}/images','ProductController@images');
         Route::get('products/{productID}/add-image','ProductController@add_image');
         Route::post('products/images/{productID}','ProductController@upload_image');
         Route::delete('products/images/{imageID}','ProductController@remove_image');
-        
+
+        // attribute
         Route::resource('attributes', 'AttributeController');
 
+        // attribute options
         Route::get('attributes/{attributeID}/options', 'AttributeController@options');
         // Route::get('attributes/{attributeID}/add-option', 'AttributeController@add_option');
         Route::post('attributes/options/{attributeID}', 'AttributeController@store_option');

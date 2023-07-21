@@ -29,14 +29,16 @@
                         <td>{{ $product->status }}</td>
                         <td>
                             <a href="{{ url('admin/products/'. $product->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
-                            <a href="{{ url('admin/products/' . $product->id) }}" class="delete" style="display:inline-block"
-                              onclick="event.preventDefault(); if (confirm('Are you sure you want to remove this item?')) { document.getElementById('delete-form-{{ $product->id }}').submit(); }">
-                              <button type="button" class="btn btn-danger btn-sm">Remove</button>
-                            </a>
-                            <form id="delete-form-{{ $product->id }}" action="{{ url('admin/products/' . $product->id) }}" method="POST" style="display: none;">
-                                @method('DELETE')
-                                @csrf
-                            </form>                                                   
+                            @if (auth()->user()->status==1)
+                              <a href="{{ url('admin/products/' . $product->id) }}" class="delete" style="display:inline-block"
+                                onclick="event.preventDefault(); if (confirm('Are you sure you want to remove this item?')) { document.getElementById('delete-form-{{ $product->id }}').submit(); }">
+                                <button type="button" class="btn btn-danger btn-sm">Remove</button>
+                              </a>
+                              <form id="delete-form-{{ $product->id }}" action="{{ url('admin/products/' . $product->id) }}" method="POST" style="display: none;">
+                                  @method('DELETE')
+                                  @csrf
+                              </form>  
+                            @endif                                                 
                           </td>
                     </tr>
                 @endforeach
@@ -51,7 +53,9 @@
           {{ $products->links() }}
         </div>
         <div class="card-footer text-right">
-          <a href="{{ url('admin/products/create') }}" class="btn btn-primary">Add New</a>
+          @if (auth()->user()->status==1)
+            <a href="{{ url('admin/products/create') }}" class="btn btn-primary">Add New</a>
+          @endif
         </div>
       </div>
     </div>
