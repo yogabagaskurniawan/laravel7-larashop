@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 // admin access
 Route::group(
-    ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth','isAdmin:1']],
+    ['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['auth','isAdmin:admin']],
     function () {
         // add product admin
         Route::get('products/create', 'ProductController@create');
@@ -38,11 +38,18 @@ Route::group(
         Route::get('attributes/{id}/edit', 'AttributeController@edit');
         Route::put('attributes/{id}', 'AttributeController@update');
         Route::delete('attributes/{id}', 'AttributeController@destroy');
-
+        
         // attribute options
         Route::delete('attributes/options/{optionID}', 'AttributeController@remove_option');
         Route::get('attributes/options/{optionID}/edit', 'AttributeController@edit_option');
         Route::put('attributes/options/{optionID}', 'AttributeController@update_option');
+
+        // Hak access
+        Route::get('users/create', 'UserController@create');
+        Route::post('users/store', 'UserController@store')->name('admin.users.store');
+        Route::get('users/{id}/edit', 'UserController@edit');
+        Route::put('users/update/{id}', 'UserController@update')->name('admin.users.update');
+        Route::get('users/delete/{id}', 'UserController@destroy');
     }
 );    
 
@@ -54,18 +61,18 @@ Route::group(
         
         // categories
         Route::get('categories', 'CategoriesController@index');
-
+        
         // product
         Route::get('products', 'ProductController@index');
         Route::get('products/{id}/edit', 'ProductController@edit');
         Route::put('products/{id}', 'ProductController@update');
-
+        
         // product image
         Route::get('products/{productID}/images','ProductController@images');
         Route::get('products/{productID}/add-image','ProductController@add_image');
         Route::post('products/images/{productID}','ProductController@upload_image');
         Route::delete('products/images/{imageID}','ProductController@remove_image');
-
+        
         // attribute
         Route::get('attributes', 'AttributeController@index');
         Route::get('attributes/create', 'AttributeController@create');
@@ -74,6 +81,9 @@ Route::group(
         // attribute options
         Route::get('attributes/{attributeID}/options', 'AttributeController@options');
         Route::post('attributes/options/{attributeID}', 'AttributeController@store_option');
+        
+        // Hak Access
+        Route::get('hakaccess', 'UserController@index');
     }
 );
 Auth::routes();

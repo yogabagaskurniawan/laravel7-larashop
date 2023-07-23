@@ -5,7 +5,7 @@
     <div class="col-lg-12">
       <div class="card card-default">
         <div class="card-header card-header-border-bottom">
-          <h2>Categories</h2>
+          <h2>Users</h2>
         </div>
         <div class="card-body">
           @include('admin.partials.flash')
@@ -14,8 +14,8 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Slug</th>
-                <th scope="col">Parent</th>
+                <th scope="col">Status</th>
+                <th scope="col">Email</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -23,22 +23,22 @@
               @php
                   $no = 1
               @endphp
-              @foreach ($categories as $category)
+              @foreach ($users as $user)
               <tr>
-                  <td>{{ $category->id }}</td>
-                  <td>{{ $category->name }}</td>
-                  <td>{{ $category->slug }}</td>
-                  <td>{{ $category->parent_id ? $category->parent->name : '' }}</td>
+                  <td>{{ $user->id }}</td>
+                  <td>{{ $user->name }}</td>
+                  <td>{{ $user->status }}</td>
+                  <td>{{ $user->email }}</td>
                   <td>
                     @if (auth()->user()->status=='admin')
-                      <a href="{{ url('admin/categories/' . $category->id . '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                      <a href="{{ url('admin/categories/delete/' . $category->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin untuk dihapus?')">Delete</a>
+                    <a href="{{ url('admin/users/' . $user->id . '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ url('admin/users/delete/' . $user->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin untuk dihapus?')">Delete</a>
                     @endif
                   </td>
               </tr>
               @endforeach
               
-              @if ($categories->isEmpty())
+              @if ($users->isEmpty())
                   <tr>
                       <td colspan="4">No records found</td>
                       <td></td>
@@ -46,11 +46,10 @@
               @endif
             </tbody>
           </table>
-          {{ $categories->links() }}
         </div>
         <div class="card-footer text-right"> 
           @if (auth()->user()->status=='admin')
-            <a href="{{ url('admin/categories/create') }}" class="btn btn-primary">Add new</a>
+            <a href="{{ url('admin/users/create') }}" class="btn btn-primary">Add new</a>
           @endif
         </div>
       </div>

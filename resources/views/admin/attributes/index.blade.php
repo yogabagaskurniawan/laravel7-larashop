@@ -26,13 +26,13 @@
                                         <td>{{ $attribute->name }}</td>
                                         <td>{{ $attribute->type }}</td>
                                         <td>
-                                            @if (auth()->user()->status==1)
+                                            @if (auth()->user()->status=='admin')
                                                 <a href="{{ url('admin/attributes/'. $attribute->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
                                             @endif    
                                             @if ($attribute->type == 'Select')
                                                 <a href="{{ url('admin/attributes/'. $attribute->id .'/options') }}" class="btn btn-success btn-sm">options</a>
                                             @endif
-                                            @if (auth()->user()->status==1)
+                                            @if (auth()->user()->status=='admin')
                                                 <a href="{{ url('admin/attributes/'. $attribute->id) }}" class="delete" style="display:inline-block"
                                                     onclick="event.preventDefault(); if (confirm('Are you sure you want to remove this item?')) { document.getElementById('delete-form-{{ $attribute->id }}').submit(); }">
                                                     <button type="button" class="btn btn-danger btn-sm">Remove</button>

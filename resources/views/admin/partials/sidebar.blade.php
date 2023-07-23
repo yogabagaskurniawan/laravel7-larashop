@@ -42,6 +42,12 @@
 							</li>
 						</div>
 					</ul>
+					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#dashboard"
+						aria-expanded="false" aria-controls="dashboard">
+						<a class="sidenav-item-link" href="{{ url('admin/hakaccess')}}">
+							<span class="nav-text">Hak Access</span>
+							</a>
+					</a>
 				</li>              
 			</ul>
 		</div>

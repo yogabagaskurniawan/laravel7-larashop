@@ -24,7 +24,7 @@
                                         <td>{{ $option->id }}</td>
                                         <td>{{ $option->name }}</td>
                                         <td>
-                                            @if (auth()->user()->status==1)
+                                            @if (auth()->user()->status=='admin')
                                                 <a href="{{ url('admin/attributes/options/'. $option->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
                                                 <form action="{{ url('admin/attributes/options/'. $option->id) }}" method="POST" class="delete" style="display:inline-block">
                                                     @method('DELETE')

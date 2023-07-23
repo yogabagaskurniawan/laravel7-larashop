@@ -15,7 +15,7 @@ class isAdmin
      */
     public function handle($request, Closure $next, ...$statuses)
     {
-        // jika status ditabel user sama dengan status = 1
+        // jika status ditabel user sama dengan status = admin
         if(in_array($request->user()->status,$statuses)){
             return $next($request);
         }
