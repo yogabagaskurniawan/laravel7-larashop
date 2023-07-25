@@ -14,8 +14,8 @@ class AttributesSeeder extends Seeder
     {
         $data = [
             [
-                'code' => 'warna',
-                'name' => 'Warna',
+                'code' => 'code',
+                'name' => 'Code',
                 'type' => 'Select',
                 'is_filterable' => 1,
                 'is_configurable' => 1,

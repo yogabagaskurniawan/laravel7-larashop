@@ -25,4 +25,9 @@ class Categories extends Model
     {
         return $this->belongsToMany('App\Models\Product', 'product_categories');
     }
+
+    public function scopeParentCategories($query)
+    {
+        return $query->where('parent_id', 0);
+    }
 }

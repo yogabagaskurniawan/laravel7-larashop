@@ -1,167 +1,18 @@
 <div class="col-sm-3 col-md-3">
+    @if ($categories)
     <div class="weight">
         <div class="title">
-            <h2>categories <i class="material-icons">&#xE313;</i></h2>
+            <h2>categories</h2>
         </div>
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                      Mobile & Accessories
-                    </a><i class="indicator fa fa-plus  pull-right"></i>
-                  </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="product-categories">
-                            <ul>
-                                <li><a href="#">Laptop & Computer </a></li>
-                                <li><a href="#">Accessories  </a></li>
-                                <li><a href="#">Gaming </a></li>
-                                <li><a href="#">Mac Computers </a></li>
-                                <li><a href="#">Ultrabooks</a></li>
-                                <li><a href="#">Printers & Ink </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                      Electronics
-                    </a><i class="indicator fa fa-plus pull-right"></i>
-                  </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="product-categories">
-                            <ul>
-                                <li><a href="#">Laptop & Computer </a></li>
-                                <li><a href="#">Accessories  </a></li>
-                                <li><a href="#">Gaming </a></li>
-                                <li><a href="#">Mac Computers </a></li>
-                                <li><a href="#">Ultrabooks</a></li>
-                                <li><a href="#">Printers & Ink </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                          Men's Fashion
-                        </a><i class="indicator fa fa-minus pull-right"></i>
-                      </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <div class="product-categories">
-                            <ul>
-                                <li><a href="#">T-shirts</a></li>
-                                  <li><a href="#">Shirts</a></li>
-                                  <li><a href="#">Suits </a></li>
-                                  <li><a href="#">Jackets</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                          Women's Fashion
-                        </a><i class="indicator fa fa-plus pull-right"></i>
-                      </h4>
-                </div>
-                <div id="collapseFour" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="product-categories">
-                            <ul>
-                                <li><a href="#">T-shirts</a></li>
-                                  <li><a href="#">Shirts</a></li>
-                                  <li><a href="#">Suits </a></li>
-                                  <li><a href="#">Jackets</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-                          Kitchen
-                        </a><i class="indicator fa fa-plus pull-right"></i>
-                      </h4>
-                </div>
-                <div id="collapseFive" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="product-categories">
-                            <ul>
-                                <li><a href="#">T-shirts</a></li>
-                                  <li><a href="#">Shirts</a></li>
-                                  <li><a href="#">Suits </a></li>
-                                  <li><a href="#">Jackets</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                          Sports
-                        </a><i class="indicator fa fa-plus pull-right"></i>
-                      </h4>
-                </div>
-                <div id="collapseSix" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="product-categories">
-                            <ul>
-                                <li><a href="#">T-shirts</a></li>
-                                  <li><a href="#">Shirts</a></li>
-                                  <li><a href="#">Suits </a></li>
-                                  <li><a href="#">Jackets</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
-                          Furniture
-                        </a><i class="indicator fa fa-plus pull-right"></i>
-                      </h4>
-                </div>
-                <div id="collapseSeven" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="product-categories">
-                            <ul>
-                                <li><a href="#">T-shirts</a></li>
-                                  <li><a href="#">Shirts</a></li>
-                                  <li><a href="#">Suits </a></li>
-                                  <li><a href="#">Jackets</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>						
+        <div class="product-categories">
+            <ul>
+                @foreach ($categories as $category)
+                <li><a href="{{ url('products?category='. $category->slug) }}">{{ $category->name }}</a></li> 
+                @endforeach
+            </ul>
+        </div>
     </div>
+    @endif
     <div class="weight">
         <div class="title">
             <h2>brands <i class="material-icons">&#xE313;</i></h2>

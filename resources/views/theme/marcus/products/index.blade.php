@@ -25,8 +25,24 @@
             <!-- /left-side --->
             <!-- right-side --->
             <div class="col-sm-9 col-md-9">
+                <form action="/products" method="GET">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="sing-up-input">
+                                    <input name="search" class="" type="text" placeholder="Search your product.." value="{{ request('search') }}">
+                                    <button type="submit" class="btn btn-success btn-lg" style="border: none; background-color: rgb(250, 78, 100)">Search</button>
+                                    @if (request()->has('search'))
+                                        <a href="/products" class="btn btn-secondary btn-lg">Reset</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
                 <div class="grid-banner">
-                <img src="assets/images/10_grid_view_box_layout/banner_image.jpg" alt="2" /> </div>
+                <img src="{{ asset('theme/marcus/assets/images/10_grid_view_box_layout/banner_image.jpg') }}" alt="2" /> </div>
                 <div class="grid-spr">
                     <div class="row">
                     <div class="col-lg-5"> 

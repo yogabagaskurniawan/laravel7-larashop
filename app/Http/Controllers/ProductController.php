@@ -2,22 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductAttributeValue;
 
 class ProductController extends Controller
 {
+    protected $data = [];
+    public function __construct()
+    {
+
+        $this->data['categories'] = Categories::parentCategories()->orderBy('name','asc')->get();
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $products = Product::active()->paginate(9);
+    public function index(Request $request)
+    {       
+        // dd(request('search'));
+        $query = Product::active();
         // dd($products);
-        return view('theme.marcus.products.index', compact('products'));
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('slug', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('short_description', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('description', 'like', '%' . $request->input('search') . '%');
+        }
+
+        $products = $query->latest()->paginate(9);
+
+        return view('theme.marcus.products.index', $this->data, compact('products'));
     }
 
     /**
