@@ -48,6 +48,17 @@
 							<span class="nav-text">Hak Access</span>
 							</a>
 					</a>
+					<a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#dashboard" aria-expanded="false" aria-controls="dashboard">
+						<a class="sidenav-item-link" href="{{ route('logout') }}"
+							onclick="event.preventDefault();
+								document.getElementById('logout-form').submit();">
+							{{ __('Logout') }}
+						</a>
+
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+							@csrf
+						</form>
+					</a>
 				</li>              
 			</ul>
 		</div>

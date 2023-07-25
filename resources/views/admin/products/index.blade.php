@@ -13,6 +13,7 @@
             <thead>
                 <th>#</th>
                 <th>SKU</th>
+                <th>Type</th>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Status</th>
@@ -23,6 +24,7 @@
                     <tr>    
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->sku }}</td>
+                        <td>{{ $product->type }}</td>
                         <td>{{ $product->name }}</td>
                         {{-- <td>{{ $product->price }}</td> --}}
                         <td>{{ number_format($product->price) }}</td>

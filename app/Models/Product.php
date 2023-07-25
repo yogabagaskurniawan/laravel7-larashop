@@ -43,7 +43,7 @@ class Product extends Model
     // relasi dengan tabel itu sendiri 
     public function variants()
     {
-        return $this->hasMany('App\Models\Product', 'parent_id');
+        return $this->hasMany('App\Models\Product', 'parent_id')->orderBy('price', 'ASC');
     }
 
     public function parent()
@@ -73,7 +73,7 @@ class Product extends Model
     // relasi ke tabel product_images
     public function productImages()
     {
-        return $this->hasMany('App\Models\productImage');
+        return $this->hasMany('App\Models\productImage')->orderBy('id', 'DESC');
     }
 
     public static function types()
@@ -82,5 +82,15 @@ class Product extends Model
             'simple' => 'Simple',
             'configurable' => 'Configurable'
         ];
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active')->where('parent_id', NULL)->orderBy('created_at', 'DESC');
+    }
+
+    function price_label()
+    {
+        return ($this->variants->count() > 0) ? $this->variants->first()->price : $this->price;
     }
 }
