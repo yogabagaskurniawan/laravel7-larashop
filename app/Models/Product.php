@@ -53,7 +53,7 @@ class Product extends Model
 
     public function productAttributeValues()
     {
-        return $this->hasMany('App\Models\ProductAttributeValue');
+        return $this->hasMany('App\Models\ProductAttributeValue', 'parent_product_id');
     }
 
     public static function statuses()

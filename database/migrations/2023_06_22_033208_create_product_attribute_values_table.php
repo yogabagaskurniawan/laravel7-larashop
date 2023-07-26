@@ -15,6 +15,7 @@ class CreateProductAttributeValuesTable extends Migration
     {
         Schema::create('product_attribute_values', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('parent_product_id')->nullable();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('attribute_id');
             $table->text('text_value')->nullable();

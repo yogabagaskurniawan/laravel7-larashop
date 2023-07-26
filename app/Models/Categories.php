@@ -30,4 +30,19 @@ class Categories extends Model
     {
         return $query->where('parent_id', 0);
     }
+
+    public static function childIds($parentId = 0)
+    {
+        $categories = Categories::select('id','name','parent_id')->where('parent_id', $parentId)->get()->toArray();
+
+        $childIds = [];
+        if(!empty($categories)){
+            foreach ($categories as $category) {
+                $childIds[] = $category['id'];
+                $childIds = array_merge($childIds, Categories::childIds($category['id']));
+            }
+        }
+
+        return $childIds;
+    }
 }
