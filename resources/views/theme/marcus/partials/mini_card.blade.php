@@ -35,7 +35,7 @@
                 <strong>$160.00</strong>
             </div>
         </div>
-        <a href="shopping-cart.html" class="cart-btn"><span class="material-icons"></span> VIEW CART </a>
+        <a href="{{ '/carts' }}" class="cart-btn"><span class="material-icons"></span> VIEW CART </a>
         <a href="checkout.html" class="cart-btn"><span class="material-icons">reply</span> CHECKOUT</a>
     </div>
 </li>

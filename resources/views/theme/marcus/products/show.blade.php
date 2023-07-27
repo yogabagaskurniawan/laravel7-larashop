@@ -114,52 +114,36 @@
 
         <form action="{{ url('carts') }}" method="post">
           @csrf
-          {{-- @if ($product->type == 'configurable')
-          <div class="size">
-            <p><strong>Select size :</strong></p>
-              <ul>
-                <select name="size" class="select">
-                    <option value="" disabled selected>- Please Select -</option>
-                    @foreach ($sizes as $size)
-                        <option value="{{ $size }}">{{ $size }}</option>
-                    @endforeach
-                </select>
-              </ul>
-          </div>
-          <div class="color">
-            <p><strong>Select color :</strong></p>
-            <select name="color" class="select">
-                <option value="" disabled selected>- Please Select -</option>
-                @foreach ($colors as $color)
-                    <option value="{{ $color }}">{{ $color }}</option>
-                @endforeach
-            </select>
-          </div>
-          @endif --}}
+          <input type="hidden" name="product_id" value="{{ $product->id }}">
           @if ($product->type == 'configurable')
             <div class="quick-view-select">
               <div class="select-option-part">
                 <label>Size*</label>
-                <select name="size" class="select">
-                  <option value="" disabled selected>- Please Select -</option>
-                  @foreach ($sizes as $size)
-                    <option value="{{ $size }}">{{ $size }}</option>
+                <select name="size" class="select" required>
+                  <option value="">- Please Select -</option>
+                  @foreach ($sizes as $value => $label)
+                      <option value="{{ $value }}">{{ $label }}</option>
                   @endforeach
-                </select>
+                </select>              
               </div>
               <div class="select-option-part">
                 <label>Color*</label>
-                <select name="color" class="select">
-                  <option value="" disabled selected>- Please Select -</option>
-                  @foreach ($colors as $color)
-                    <option value="{{ $color }}">{{ $color }}</option>
+                <select name="color" class="select" required>
+                  <option value="">- Please Select -</option>
+                  @foreach ($colors as $value => $label)
+                      <option value="{{ $value }}">{{ $label }}</option>
                   @endforeach
-                </select>
+              </select>
               </div>
             </div>
           @endif
-          <div class="numbers-row"><input type="text" name="qty" id="french-hens" value="1"/></div>
-
+          {{-- <div class="numbers-row"><input type="text" name="qty" id="french-hens" value="1"/></div> --}}
+          <div class="numbers-row">
+            <input type="number" name="qty" style="width: 70px" id="french-hens" placeholder="qty" min="1" value="1" required>
+            {{-- <input type="text" name="french-hens" id="french-hens" value="3"> --}}
+            {{-- <div class="inc button">+</div>
+            <div class="dec button">-</div> --}}
+          </div>
         <button type="submit" style="border: none" class=" addtocart2"><span class="material-icons">shopping_cart</span>add to cart</button>
 
 

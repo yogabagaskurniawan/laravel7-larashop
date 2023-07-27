@@ -93,4 +93,14 @@ class Product extends Model
     {
         return ($this->variants->count() > 0) ? $this->variants->first()->price : $this->price;
     }
+
+    public function configurable()
+    {
+        return $this->type == 'configurable';
+    }
+
+    public function simple()
+    {
+        return $this->type == 'simple';
+    }
 }
