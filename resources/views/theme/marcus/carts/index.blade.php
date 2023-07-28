@@ -1,7 +1,7 @@
 @extends('theme.marcus.layout.main')
 
 @section('content')
-<section class="shopping-cart" style="margin-top: 200px">
+<section class="shopping-cart">
     <div class="breadcrumb">
       <div class="container">
         <div class="row">

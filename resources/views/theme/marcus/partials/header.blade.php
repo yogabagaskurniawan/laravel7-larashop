@@ -118,21 +118,26 @@
                         <li>
                             <a href="contact.html"><span>contact</span></a>
                         </li>
-                        <li><a href="#">buy theme</a></li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" data-hover="dropdown" aria-expanded="true"><img src="assets/images/06_homepage_v6/flag_icon.jpg" alt="flag-icon"> German <i class="material-icons">expand_more</i></a>
-                            <ul class="dropdown-menu dropdownhover-bottom" role="menu">
-                                <li>
-                                    <a href="grid.html"><img src="assets/images/06_homepage_v6/flag_icon.jpg" alt="flag-icon"> German</a>
-                                </li>
-                                <li>
-                                    <a href="list.html"><img src="assets/images/06_homepage_v6/flag_icon.jpg" alt="flag-icon"> Us</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="#"><i class="material-icons">search</i></a></li>
+                    <ul class="nav navbar-nav navbar-right" >
+                        @guest
+							<li><a href="{{ url('login') }}">Login</a></li>
+							<li style="margin-right: 20px"><a href="{{ url('register') }}">Register</a></li>
+						@else
+                            <li class="dropdown" style="margin-right: 20px">
+                                <a id="navbarDropdown" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                    <span>{{ Auth::user()->first_name }}</span> <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdownhover-bottom" role="menu">
+                                    <li>
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+						@endguest
                         @include('theme.marcus.partials.mini_card')
                     </ul>
                     <!-- /.navbar-collapse -->
@@ -143,5 +148,5 @@
 
     </div>
 
-    {{-- @include('theme.marcus.partials.slider') --}}
+    @include('theme.marcus.partials.slider')
 </header>

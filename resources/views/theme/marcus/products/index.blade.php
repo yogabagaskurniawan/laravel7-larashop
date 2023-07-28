@@ -1,7 +1,7 @@
 @extends('theme.marcus.layout.main')
 
 @section('content')
-<section class="grid-shop" style="margin-top: 200px">
+<section class="grid-shop">
     <!-- .grid-shop -->
     <div class="breadcrumb">
         <div class="container">

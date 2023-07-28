@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- grid-shop -->
-<section class="grid-shop" style="margin-top: 200px">
+<section class="grid-shop">
   <!-- .grid-shop -->
   <div class="breadcrumb wihte-bg-brc">
     <div class="container">
