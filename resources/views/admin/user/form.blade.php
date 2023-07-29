@@ -24,9 +24,9 @@
         @endif
         @csrf
         <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" name="name" class="form-control  @error('name') has-error @enderror" placeholder="Name" value="{{ $users->name ?? '' }}">
-          @error('name')
+          <label for="name">First Name</label>
+          <input type="text" name="first_name" class="form-control  @error('first_name') has-error @enderror" placeholder="first_name" value="{{ $users->first_name ?? '' }}">
+          @error('first_name')
             <p class="help-block">{{ $message }}</p>
           @enderror
         </div>

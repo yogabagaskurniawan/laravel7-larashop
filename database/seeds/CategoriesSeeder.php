@@ -16,17 +16,17 @@ class CategoriesSeeder extends Seeder
             [
                 'name' => 'Pakaian Anak',
                 'slug' => 'pakaian-anak',
-                'parent_id' => 0,
+                'parent_id' => NULL,
             ],
             [
                 'name' => 'Pakaian Pria',
                 'slug' => 'pakaian-pria',
-                'parent_id' => 0,
+                'parent_id' => NULL,
             ],
             [
                 'name' => 'Electronik',
                 'slug' => 'electronik',
-                'parent_id' => 0,
+                'parent_id' => NULL,
             ],
         ];
     

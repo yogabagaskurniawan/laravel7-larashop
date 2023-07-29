@@ -41,8 +41,8 @@
                     </div>
                 </form>
                 
-                <div class="grid-banner">
-                <img src="{{ asset('theme/marcus/assets/images/10_grid_view_box_layout/banner_image.jpg') }}" alt="2" /> </div>
+                {{-- <div class="grid-banner">
+                <img src="{{ asset('theme/marcus/assets/images/10_grid_view_box_layout/banner_image.jpg') }}" alt="2" /> </div> --}}
                 <div class="grid-spr">
                     <div class="row">
                     <div class="col-lg-5"> 

@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('name', 'asc')->paginate(10);
+        $users = User::orderBy('first_name', 'asc')->paginate(10);
         return view('admin.user.index', compact('users'));
     }
 
@@ -40,13 +40,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'string|required|min:2',
+            'first_name' => 'string|required|min:2',
             'status' => 'string|required|min:2',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
         ]);
 
-        $data = $request->only(['name', 'status', 'email']);
+        $data = $request->only(['first_name', 'status', 'email']);
         $data['password'] = Hash::make($request->input('password'));
 
         // Simpan data pengguna ke dalam database
@@ -92,7 +92,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'string|required|min:2',
+            'first_name' => 'string|required|min:2',
             'status' => 'string|required|min:2',
             'email' => 'required|email|unique:users,email,' . $id, // Menambahkan $id agar validasi unik dikecualikan untuk record dengan ID yang sedang diperbarui.
             'password' => 'required|min:6',
@@ -102,7 +102,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         // Perbarui data pengguna
-        $user->name = $request->input('name');
+        $user->first_name = $request->input('first_name');
         $user->status = $request->input('status');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
