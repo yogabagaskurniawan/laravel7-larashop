@@ -30,9 +30,12 @@
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-      <![endif]-->
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- CSRF Token -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="home6" style="overflow-x: hidden;">
@@ -67,6 +70,8 @@
 	<script type="text/javascript" src="{{ asset('theme/marcus/assets/js/jquery.jcarousel.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('theme/marcus/assets/js/jcarousel.connected-carousels.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('theme/marcus/assets/js/jquery.elevatezoom.js') }}"></script>
+	{{-- <script type="text/javascript" src="{{ asset('theme/marcus/assets/js/app.js') }}"></script> --}}
+	<script src="{{ asset('theme/marcus/assets/js/app.js') }}"></script>
 	<script>
 		$('.zoom_01').elevateZoom({
 			zoomType: "inner",

@@ -166,7 +166,7 @@
                   </li> --}}
                   <li>ToTAL: <strong>{{ number_format(\Cart::getTotal()) }}</strong></li>
                   <li class="text-center">
-                    <a href="#" class="redbutton">proceed checkout</a>
+                    <a href="orders/checkout" class="redbutton">proceed checkout</a>
                     {{-- <a href="#" class="blackbutton">continue shopping</a> --}}
                   </li>
                 </ul>
